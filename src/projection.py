@@ -358,7 +358,7 @@ def analyze_and_save_projections(portfolio_paths, volatility_paths, config, pric
     plt.savefig(os.path.join(reports_dir, proj_config['main_plot_filename']), dpi=300)
 
     # --- 6. Generate Standalone Histogram Plot ---
-    fig_hist, ax_hist_standalone = plt.subplots(figsize=(10, 6))
+    fig_hist, ax_hist_standalone = plt.subplots(figsize=(14, 6))
     ax_hist_standalone.hist(bounded_values, bins=bins, edgecolor='black', alpha=0.75, color='skyblue')
     ax_hist_standalone.set_xlim(0, upper_bound)
     for percentile in highlight_percentiles:
@@ -375,7 +375,7 @@ def analyze_and_save_projections(portfolio_paths, volatility_paths, config, pric
     # --- 7. Generate Standalone Simulation Path Plots ---
     
     # Plot 1: Sample Paths (for simulation_paths.png)
-    fig_sim_sample, ax_sim_sample = plt.subplots(figsize=(12, 8))
+    fig_sim_sample, ax_sim_sample = plt.subplots(figsize=(16, 6))
     for i in sample_indices: # Use the same sample as the tearsheet
         ax_sim_sample.plot(time_steps, portfolio_paths[:, i], color=path_colors[i], alpha=0.6, linewidth=0.8)
 
@@ -401,7 +401,7 @@ def analyze_and_save_projections(portfolio_paths, volatility_paths, config, pric
     plt.close(fig_sim_sample)
 
     # Plot 2: All Paths (for simulation_paths_full.png)
-    fig_sim_full, ax_sim_full = plt.subplots(figsize=(12, 8))
+    fig_sim_full, ax_sim_full = plt.subplots(figsize=(16, 6))
     for i in range(n_paths):
         ax_sim_full.plot(time_steps, portfolio_paths[:, i], color=path_colors[i], alpha=0.5, linewidth=0.8)
 
