@@ -1,0 +1,10 @@
+yfinance
+pandas
+numpy
+CurrencyConverter
+PyYAML
+seaborn
+matplotlib
+networkx
+PyPortfolioOpt
+quantstats

@@ -1,0 +1,121 @@
+,Weight,Cap_Group,Sector
+DORM,0.0495,Small/Mid-Cap,Consumer Cyclical
+URBN,0.0495,Small/Mid-Cap,Consumer Cyclical
+FOUR,0.0495,Small/Mid-Cap,Technology
+IDCC,0.0495,Small/Mid-Cap,Technology
+COCO,0.0495,Small/Mid-Cap,Consumer Defensive
+MSA,0.0495,Small/Mid-Cap,Industrials
+OLLI,0.0495,Small/Mid-Cap,Consumer Defensive
+PLNT,0.0495,Small/Mid-Cap,Consumer Cyclical
+SMR,0.0495,Small/Mid-Cap,Industrials
+300750.SZ,0.0405,Large-Cap,Industrials
+PLTR,0.0405,Large-Cap,Technology
+OKLO,0.0405,Large-Cap,Utilities
+AWI,0.0327525,Small/Mid-Cap,Industrials
+TSLA,0.0135,Large-Cap,Consumer Cyclical
+UVSP,0.011,Small/Mid-Cap,Financial Services
+DUOL,0.011,Small/Mid-Cap,Technology
+VYM,0.009,Large-Cap,ETF
+MSFT,0.009,Large-Cap,Technology
+BURL,0.009,Large-Cap,Consumer Cyclical
+AZN,0.009,Large-Cap,Healthcare
+AMZN,0.009,Large-Cap,Consumer Cyclical
+AMD,0.009,Large-Cap,Technology
+ALB,0.009,Large-Cap,Basic Materials
+DOV,0.009,Large-Cap,Industrials
+NVDA,0.009,Large-Cap,Technology
+PFE,0.009,Large-Cap,Healthcare
+ETN,0.009,Large-Cap,Industrials
+F,0.009,Large-Cap,Consumer Cyclical
+AAPL,0.009,Large-Cap,Technology
+TSM,0.009,Large-Cap,Technology
+FSLR,0.009,Large-Cap,Technology
+JNJ,0.009,Large-Cap,Healthcare
+GOOGL,0.009,Large-Cap,Communication Services
+T,0.009,Large-Cap,Communication Services
+RSI,0.0029975,Small/Mid-Cap,Consumer Cyclical
+LMND,0.00275,Small/Mid-Cap,Financial Services
+YORW,0.00275,Small/Mid-Cap,Utilities
+ENS,0.00275,Small/Mid-Cap,Industrials
+GATX,0.00275,Small/Mid-Cap,Industrials
+DGICA,0.00275,Small/Mid-Cap,Financial Services
+CUBE,0.00275,Small/Mid-Cap,Real Estate
+IBAB.BR,0.00275,Small/Mid-Cap,Healthcare
+COUR,0.00275,Small/Mid-Cap,Consumer Defensive
+MGM,0.00275,Small/Mid-Cap,Consumer Cyclical
+CHPT,0.00275,Small/Mid-Cap,Consumer Cyclical
+AXTA,0.00275,Small/Mid-Cap,Basic Materials
+RICOY,0.00275,Small/Mid-Cap,Industrials
+SLDP,0.00275,Small/Mid-Cap,Consumer Cyclical
+VITL,0.00275,Small/Mid-Cap,Consumer Defensive
+WRBY,0.00275,Small/Mid-Cap,Healthcare
+WSFS,0.00275,Small/Mid-Cap,Financial Services
+AAL,0.00275,Small/Mid-Cap,Industrials
+LRLCY,0.00225,Large-Cap,Consumer Defensive
+RIVN,0.00225,Large-Cap,Consumer Cyclical
+PWR,0.00225,Large-Cap,Industrials
+PPL,0.00225,Large-Cap,Utilities
+JPM,0.00225,Large-Cap,Financial Services
+PHM,0.00225,Large-Cap,Consumer Cyclical
+LI,0.00225,Large-Cap,Consumer Cyclical
+MA,0.00225,Large-Cap,Financial Services
+ORCL,0.00225,Large-Cap,Technology
+LYV,0.00225,Large-Cap,Communication Services
+ROP,0.00225,Large-Cap,Technology
+NIO,0.00225,Large-Cap,Consumer Cyclical
+NFLX,0.00225,Large-Cap,Communication Services
+NEE,0.00225,Large-Cap,Utilities
+RMD,0.00225,Large-Cap,Healthcare
+RJF,0.00225,Large-Cap,Financial Services
+SYK,0.00225,Large-Cap,Healthcare
+VST,0.00225,Large-Cap,Utilities
+SO,0.00225,Large-Cap,Utilities
+SONY,0.00225,Large-Cap,Technology
+WAB,0.00225,Large-Cap,Industrials
+INVH,0.00225,Large-Cap,Real Estate
+TDY,0.00225,Large-Cap,Technology
+THC,0.00225,Large-Cap,Healthcare
+TM,0.00225,Large-Cap,Consumer Cyclical
+HWM,0.00225,Large-Cap,Industrials
+HSY,0.00225,Large-Cap,Consumer Defensive
+TXRH,0.00225,Large-Cap,Consumer Cyclical
+UHS,0.00225,Large-Cap,Healthcare
+ULTA,0.00225,Large-Cap,Consumer Cyclical
+UMG.AS,0.00225,Large-Cap,Communication Services
+VRTX,0.00225,Large-Cap,Healthcare
+HIG,0.00225,Large-Cap,Financial Services
+FIS,0.00225,Large-Cap,Technology
+WBD,0.00225,Large-Cap,Communication Services
+EXC,0.00225,Large-Cap,Utilities
+ZBH,0.00225,Large-Cap,Healthcare
+HBAN,0.00225,Large-Cap,Financial Services
+HAL,0.00225,Large-Cap,Energy
+GM,0.00225,Large-Cap,Consumer Cyclical
+FLUT,0.00225,Large-Cap,Consumer Cyclical
+MCK,0.00225,Large-Cap,Healthcare
+EXAS,0.00225,Large-Cap,Healthcare
+ADBE,0.00225,Large-Cap,Technology
+ERIE,0.00225,Large-Cap,Financial Services
+EIX,0.00225,Large-Cap,Utilities
+DIS,0.00225,Large-Cap,Communication Services
+CTAS,0.00225,Large-Cap,Industrials
+FI,0.00225,Large-Cap,Technology
+MRK,0.00225,Large-Cap,Healthcare
+WCC,0.00225,Large-Cap,Industrials
+CRS,0.00225,Large-Cap,Industrials
+CRM,0.00225,Large-Cap,Technology
+CRCL,0.00225,Large-Cap,Financial Services
+COH.AX,0.00225,Large-Cap,Healthcare
+CHEOY,0.00225,Large-Cap,Healthcare
+CAT,0.00225,Large-Cap,Industrials
+BYDDY,0.00225,Large-Cap,Consumer Cyclical
+BSX,0.00225,Large-Cap,Healthcare
+BEP,0.00225,Large-Cap,Utilities
+BE,0.00225,Large-Cap,Industrials
+AVGO,0.00225,Large-Cap,Technology
+ATI,0.00225,Large-Cap,Industrials
+ARMK,0.00225,Large-Cap,Industrials
+APTV,0.00225,Large-Cap,Consumer Cyclical
+AME,0.00225,Large-Cap,Industrials
+ALC,0.00225,Large-Cap,Healthcare
+PANW,0.00225,Large-Cap,Technology

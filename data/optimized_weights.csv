@@ -1,0 +1,121 @@
+,Weight,Cap_Group,Sector
+DORM,0.0495,Small/Mid-Cap,Consumer Cyclical
+URBN,0.0495,Small/Mid-Cap,Consumer Cyclical
+FOUR,0.0495,Small/Mid-Cap,Technology
+IDCC,0.0495,Small/Mid-Cap,Technology
+COCO,0.0495,Small/Mid-Cap,Consumer Defensive
+MSA,0.0495,Small/Mid-Cap,Industrials
+OLLI,0.0495,Small/Mid-Cap,Consumer Defensive
+PLNT,0.0495,Small/Mid-Cap,Consumer Cyclical
+SMR,0.0495,Small/Mid-Cap,Industrials
+300750.SZ,0.0405,Large-Cap,Industrials
+PLTR,0.0405,Large-Cap,Technology
+OKLO,0.0405,Large-Cap,Utilities
+AWI,0.032752500000000004,Small/Mid-Cap,Industrials
+TSLA,0.0135,Large-Cap,Consumer Cyclical
+UVSP,0.011000000000000001,Small/Mid-Cap,Financial Services
+DUOL,0.011000000000000001,Small/Mid-Cap,Technology
+TSM,0.009000000000000001,Large-Cap,Technology
+T,0.009000000000000001,Large-Cap,Communication Services
+GOOGL,0.009000000000000001,Large-Cap,Communication Services
+JNJ,0.009000000000000001,Large-Cap,Healthcare
+FSLR,0.009000000000000001,Large-Cap,Technology
+PFE,0.009000000000000001,Large-Cap,Healthcare
+AAPL,0.009000000000000001,Large-Cap,Technology
+F,0.009000000000000001,Large-Cap,Consumer Cyclical
+ETN,0.009000000000000001,Large-Cap,Industrials
+VYM,0.009000000000000001,Large-Cap,ETF
+NVDA,0.009000000000000001,Large-Cap,Technology
+DOV,0.009000000000000001,Large-Cap,Industrials
+ALB,0.009000000000000001,Large-Cap,Basic Materials
+AMD,0.009000000000000001,Large-Cap,Technology
+AMZN,0.009000000000000001,Large-Cap,Consumer Cyclical
+AZN,0.009000000000000001,Large-Cap,Healthcare
+BURL,0.009000000000000001,Large-Cap,Consumer Cyclical
+MSFT,0.009000000000000001,Large-Cap,Technology
+RSI,0.0029975,Small/Mid-Cap,Consumer Cyclical
+AAL,0.0027500000000000003,Small/Mid-Cap,Industrials
+WSFS,0.0027500000000000003,Small/Mid-Cap,Financial Services
+WRBY,0.0027500000000000003,Small/Mid-Cap,Healthcare
+VITL,0.0027500000000000003,Small/Mid-Cap,Consumer Defensive
+SLDP,0.0027500000000000003,Small/Mid-Cap,Consumer Cyclical
+RICOY,0.0027500000000000003,Small/Mid-Cap,Industrials
+AXTA,0.0027500000000000003,Small/Mid-Cap,Basic Materials
+MGM,0.0027500000000000003,Small/Mid-Cap,Consumer Cyclical
+CHPT,0.0027500000000000003,Small/Mid-Cap,Consumer Cyclical
+LMND,0.0027500000000000003,Small/Mid-Cap,Financial Services
+COUR,0.0027500000000000003,Small/Mid-Cap,Consumer Defensive
+IBAB.BR,0.0027500000000000003,Small/Mid-Cap,Healthcare
+CUBE,0.0027500000000000003,Small/Mid-Cap,Real Estate
+DGICA,0.0027500000000000003,Small/Mid-Cap,Financial Services
+GATX,0.0027500000000000003,Small/Mid-Cap,Industrials
+ENS,0.0027500000000000003,Small/Mid-Cap,Industrials
+YORW,0.0027500000000000003,Small/Mid-Cap,Utilities
+MRK,0.0022500000000000003,Large-Cap,Healthcare
+FI,0.0022500000000000003,Large-Cap,Technology
+CTAS,0.0022500000000000003,Large-Cap,Industrials
+DIS,0.0022500000000000003,Large-Cap,Communication Services
+EIX,0.0022500000000000003,Large-Cap,Utilities
+ERIE,0.0022500000000000003,Large-Cap,Financial Services
+EXAS,0.0022500000000000003,Large-Cap,Healthcare
+EXC,0.0022500000000000003,Large-Cap,Utilities
+FIS,0.0022500000000000003,Large-Cap,Technology
+MCK,0.0022500000000000003,Large-Cap,Healthcare
+FLUT,0.0022500000000000003,Large-Cap,Consumer Cyclical
+GM,0.0022500000000000003,Large-Cap,Consumer Cyclical
+HAL,0.0022500000000000003,Large-Cap,Energy
+HBAN,0.0022500000000000003,Large-Cap,Financial Services
+ZBH,0.0022500000000000003,Large-Cap,Healthcare
+WCC,0.0022500000000000003,Large-Cap,Industrials
+CRS,0.0022500000000000003,Large-Cap,Industrials
+CRM,0.0022500000000000003,Large-Cap,Technology
+CRCL,0.0022500000000000003,Large-Cap,Financial Services
+COH.AX,0.0022500000000000003,Large-Cap,Healthcare
+CHEOY,0.0022500000000000003,Large-Cap,Healthcare
+CAT,0.0022500000000000003,Large-Cap,Industrials
+BYDDY,0.0022500000000000003,Large-Cap,Consumer Cyclical
+BSX,0.0022500000000000003,Large-Cap,Healthcare
+BEP,0.0022500000000000003,Large-Cap,Utilities
+BE,0.0022500000000000003,Large-Cap,Industrials
+AVGO,0.0022500000000000003,Large-Cap,Technology
+ATI,0.0022500000000000003,Large-Cap,Industrials
+ARMK,0.0022500000000000003,Large-Cap,Industrials
+APTV,0.0022500000000000003,Large-Cap,Consumer Cyclical
+AME,0.0022500000000000003,Large-Cap,Industrials
+ALC,0.0022500000000000003,Large-Cap,Healthcare
+ADBE,0.0022500000000000003,Large-Cap,Technology
+WBD,0.0022500000000000003,Large-Cap,Communication Services
+WAB,0.0022500000000000003,Large-Cap,Industrials
+HIG,0.0022500000000000003,Large-Cap,Financial Services
+RMD,0.0022500000000000003,Large-Cap,Healthcare
+NEE,0.0022500000000000003,Large-Cap,Utilities
+NFLX,0.0022500000000000003,Large-Cap,Communication Services
+NIO,0.0022500000000000003,Large-Cap,Consumer Cyclical
+MA,0.0022500000000000003,Large-Cap,Financial Services
+LYV,0.0022500000000000003,Large-Cap,Communication Services
+ORCL,0.0022500000000000003,Large-Cap,Technology
+LRLCY,0.0022500000000000003,Large-Cap,Consumer Defensive
+LI,0.0022500000000000003,Large-Cap,Consumer Cyclical
+PHM,0.0022500000000000003,Large-Cap,Consumer Cyclical
+JPM,0.0022500000000000003,Large-Cap,Financial Services
+PPL,0.0022500000000000003,Large-Cap,Utilities
+PWR,0.0022500000000000003,Large-Cap,Industrials
+RIVN,0.0022500000000000003,Large-Cap,Consumer Cyclical
+RJF,0.0022500000000000003,Large-Cap,Financial Services
+ROP,0.0022500000000000003,Large-Cap,Technology
+VST,0.0022500000000000003,Large-Cap,Utilities
+SO,0.0022500000000000003,Large-Cap,Utilities
+SONY,0.0022500000000000003,Large-Cap,Technology
+SYK,0.0022500000000000003,Large-Cap,Healthcare
+INVH,0.0022500000000000003,Large-Cap,Real Estate
+TDY,0.0022500000000000003,Large-Cap,Technology
+THC,0.0022500000000000003,Large-Cap,Healthcare
+TM,0.0022500000000000003,Large-Cap,Consumer Cyclical
+HWM,0.0022500000000000003,Large-Cap,Industrials
+HSY,0.0022500000000000003,Large-Cap,Consumer Defensive
+TXRH,0.0022500000000000003,Large-Cap,Consumer Cyclical
+UHS,0.0022500000000000003,Large-Cap,Healthcare
+ULTA,0.0022500000000000003,Large-Cap,Consumer Cyclical
+UMG.AS,0.0022500000000000003,Large-Cap,Communication Services
+VRTX,0.0022500000000000003,Large-Cap,Healthcare
+PANW,0.0022500000000000003,Large-Cap,Technology

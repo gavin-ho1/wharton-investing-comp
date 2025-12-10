@@ -1,0 +1,154 @@
+# config.yaml
+# Configuration settings for the quantitative investing workflow.
+
+# ------------------------------------------------------------
+# Phase 1: Data Collection
+# ------------------------------------------------------------
+data_collection:
+  lookback_years: 25  
+  target_currency: 'USD'
+  output_dir: 'data'
+  reports_dir: 'reports'
+  prices_filename: 'prices_adj_close_usd.csv'
+  dividends_filename: 'dividends.csv'
+  fundamentals_filename_prefix: 'fundamentals'
+  etf_list_filename: 'etf-list.txt'
+  min_stock_price: 5.0
+
+# ------------------------------------------------------------
+# Phase 2: Fundamental Screening
+# ------------------------------------------------------------
+fundamental_screening:
+  score_weights:
+    Value: 0.1111
+    Growth: 0.7222      
+    Quality: 0.1666       
+  screening_percentile_cutoff: 0.65  # Keep top (1-x)% of stocks
+  
+  always_include_filename: 'always-include.txt' 
+  output_scores_filename: 'fundamental_scores.csv'
+  output_tickers_filename: 'screened_tickers.txt'
+
+# ------------------------------------------------------------
+# Phase 3: Quant Factor Analysis
+# ------------------------------------------------------------
+quant_factor_analysis:
+  benchmark_ticker: 'SPY'
+  risk_free_ticker: '^IRX'
+  risk_free_rate: 0.0175
+  score_weights:
+    Momentum: 0.15
+    Volatility: 0.10
+    Beta: 0.10
+    Sharpe: 0.65
+  output_filename: 'quant_scores.csv'
+
+# ------------------------------------------------------------
+# Phase 4: Correlation & Diversification Analysis
+# ------------------------------------------------------------
+correlation_analysis:
+  lookback_years: 5
+  correlation_threshold: 0.75 # Threshold for filtering/clustering logic
+  graph_min_corr_threshold: 0.1 # Visual threshold for drawing edges in the graph
+  correlation_keep_percentile: 0.30
+  hybrid_score_weights:
+    fundamental: 0.57
+    quant: 0.43
+  max_sector_weight: 0.20
+  output_hybrid_scores_filename: 'hybrid_scores.csv'
+  output_tickers_filename: 'diversified_tickers.txt'
+  output_heatmap_filename: 'correlation_heatmap.png'
+  output_graph_filename: 'correlation_graph.png'
+  output_sector_dist_filename: 'sector_distribution.csv'
+
+# ------------------------------------------------------------
+# Phase 5: Portfolio Optimization
+# ------------------------------------------------------------
+portfolio_optimization:
+  objective: 'mean_variance'       
+  risk_aversion: 1.0               
+  large_cap_threshold_usd: 10_000_000_000 
+  max_weight_per_stock: 0.09      
+  min_weight_per_stock: 0.005     
+  output_filename: 'optimized_weights.csv'
+
+# ------------------------------------------------------------
+# Phase 6: Projection
+# ------------------------------------------------------------
+projection:
+  lookback_years: 25
+  horizon_years: 10
+  n_simulations: 10000
+  batch_size: 500  # Number of simulations per batch (reduces memory usage)
+  initial_investment: 500000
+
+  # --- Rebalancing Strategy ---
+  enable_monthly_rebalancing: true
+  rebalance_annually: false        # Set to true for annual rebalancing instead of monthly
+  rebalancing_alpha: 1.0          
+  return_shrinkage: 0.75          
+  target_volatility: 0.05         
+  enable_target_vol_scaling: false
+
+  plot_percentiles: [10, 50, 90]
+  summary_filename: 'projection_summary.csv'
+  starting_weights_filename: 'projection_starting_weights.csv'
+  main_plot_filename: 'projection_tearsheet.png'
+  simulation_paths_plot_filename: 'simulation_paths.png'
+  histogram_plot_filename: 'final_values_histogram.png'
+
+  simulation_model:
+    simulation_level: 'asset'   # Keep 'asset' level for more realistic distributional tails
+    use_stochastic_vol: true
+    use_jump_diffusion: true
+
+    # Tuned Heston model parameters for realistic volatility dynamics
+    heston_params:
+      kappa: 3.5     
+      theta: 0.03    
+      sigma_v: 0.30  
+      rho: -0.5      
+
+    # Tuned Merton jump-diffusion parameters (portfolio-level)
+    merton_params:
+      lambda: 0.10   
+      mu_j: -0.08    
+      sigma_j: 0.20  
+
+    # Asset-level stochastic parameters for systemic/idiosyncratic shocks
+    asset_level_params:
+      systemic_jumps:
+        lambda_sys: 0.05   
+        mu_sys: -0.05
+        sigma_sys: 0.12
+      idiosyncratic_jumps:
+        lambda_id: 0.02   
+        mu_id: -0.10      
+        sigma_id: 0.15
+
+# ------------------------------------------------------------
+# Phase 7: Backtesting
+# ------------------------------------------------------------
+backtesting:
+  start_date: '2005-01-01'
+  rebalancing_frequency: 'annual'
+  transaction_costs_bps: 5  
+  benchmark_ticker: 'SPY'
+  report_filename: 'backtest_report.html'
+  dividend_report_filename: 'dividend_coverage_report.csv'
+  final_allocations_filename: 'final_backtest_allocations.csv'
+  annual_withdrawal: 10000
+
+# ------------------------------------------------------------
+# Phase 8: Monitoring
+# ------------------------------------------------------------
+monitoring:
+  lookback_period_days: 365
+  report_filename: 'monitoring_report.html'
+
+# ------------------------------------------------------------
+# Overall Portfolio Allocation Targets
+# ------------------------------------------------------------
+portfolio_allocation:
+  large_cap: 0.45
+  small_mid_cap: 0.55
