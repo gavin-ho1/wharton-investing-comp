@@ -1,4 +1,4 @@
-Ticker,Company Name/ETF Number,Value ($),Total %,Recommended %
+Ticker,Company Name,Value ($),Total %,Recommended %
 300750.SZ,Contemporary Amperex Technology Co. Limited,"20,277.41",3.94%,4.05%
 AAL,American Airlines Group Inc,"1,451.38",0.28%,0.28%
 AAPL,Apple Inc,"4,739.26",0.92%,0.90%
@@ -110,7 +110,6 @@ UVSP,Univest Financial Corp,"5,989.34",1.17%,1.10%
 VITL,Vital Farms Inc,"1,396.12",0.27%,0.28%
 VRTX,"Vertex Pharmaceuticals, Inc.","1,366.44",0.27%,0.23%
 VST,Vistra Corp,"1,003.02",0.20%,0.23%
-VYM,#65,"4,646.72",0.90%,0.90%
 WAB,Westinghouse Air Brake Technologies Corp,"1,074.75",0.21%,0.23%
 WBD,Warner Bros. Discovery Inc,"1,277.92",0.25%,0.23%
 WCC,"Wesco International, Inc.","1,093.44",0.21%,0.23%

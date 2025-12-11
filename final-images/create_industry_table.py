@@ -169,7 +169,7 @@ def create_industry_table(input_csv, output_image='industry_table.png', max_rows
 if __name__ == "__main__":
     # Example usage:
     # Two-column layout (default) - top 20 industries
-    create_industry_table("Portfolio Allocations - Sheet5.csv", "industry_table_full.png", max_rows=23, two_column_layout=True)
+    create_industry_table("Portfolio Allocations - Sheet5.csv", "industry_table_full.png", two_column_layout=True)
     
     # Single unified column layout - top 20 industries
     # create_industry_table("Portfolio Allocations - Sheet5.csv", "industry_table_single.png", max_rows=20, two_column_layout=False)
