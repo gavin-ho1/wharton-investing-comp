@@ -23,15 +23,17 @@ def create_metrics_table(data, output_image='metrics_table.png'):
             ('color', 'white'),
             ('font-weight', 'bold'),
             ('text-align', 'center'),
-            ('font-size', '11pt'),
+            ('font-size', '13pt'),
             ('border', '1px solid #49467F'),
-            ('padding', '8px 12px')
+            ('padding', '15px 40px'),
+            ('min-width', '150px')
         ]},
         {'selector': 'td', 'props': [
             ('border', '1px solid #ddd'),
-            ('padding', '8px 12px'),
+            ('padding', '15px 40px'),
             ('text-align', 'center'),
-            ('font-size', '11pt')
+            ('font-size', '12pt'),
+            ('min-width', '150px')
         ]},
         {'selector': '', 'props': [
             ('border-collapse', 'separate'),

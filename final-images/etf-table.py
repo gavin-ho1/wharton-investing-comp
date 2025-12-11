@@ -31,14 +31,17 @@ def create_single_column_table(input_csv, output_image='etf_table_output.png'):
             ('color', 'white'),
             ('font-weight', 'bold'),
             ('text-align', 'center'),
-            ('font-size', '9pt'),
+            ('font-size', '13pt'),
             ('border', '1px solid #49467F'),
-            ('padding', '4px')
+            ('padding', '15px 40px'),
+            ('min-width', '150px')
         ]},
         {'selector': 'td', 'props': [
             ('border', '1px solid #ddd'),
-            ('padding', '4px'),
-            ('text-align', 'left')
+            ('padding', '15px 40px'),
+            ('text-align', 'left'),
+            ('font-size', '12pt'),
+            ('min-width', '150px')
         ]},
         {'selector': '', 'props': [
             ('border-collapse', 'separate'),
