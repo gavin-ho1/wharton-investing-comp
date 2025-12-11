@@ -19,12 +19,12 @@ def create_metrics_table(data, output_image='metrics_table.png'):
     # Style the dataframe
     styles = [
         {'selector': 'th', 'props': [
-            ('background-color', '#4472C4'),
+            ('background-color', '#49467F'),
             ('color', 'white'),
             ('font-weight', 'bold'),
             ('text-align', 'center'),
             ('font-size', '11pt'),
-            ('border', '1px solid #4472C4'),
+            ('border', '1px solid #49467F'),
             ('padding', '8px 12px')
         ]},
         {'selector': 'td', 'props': [

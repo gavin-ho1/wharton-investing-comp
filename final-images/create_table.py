@@ -52,12 +52,12 @@ def create_two_column_table(input_csv, output_image='table_output.png'):
     
     styles = [
         {'selector': 'th', 'props': [
-            ('background-color', '#4472C4'),
+            ('background-color', '#49467F'),
             ('color', 'white'),
             ('font-weight', 'bold'),
             ('text-align', 'center'),
             ('font-size', '9pt'),
-            ('border', '1px solid #4472C4'),
+            ('border', '1px solid #49467F'),
             ('padding', '4px')
         ]},
         {'selector': 'td', 'props': [
