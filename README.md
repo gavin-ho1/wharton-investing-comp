@@ -1,6 +1,6 @@
-# Quantitative Investing Workflow
+# Wharton Investing Competition Codebase
 
-This repository contains a multi-phase quantitative investing workflow designed to identify promising stocks, construct an optimized portfolio, and project its future performance. The entire process is configurable via the `config.yaml` file.
+This repository contains a multi-phase quantitative investing workflow designed to identify promising stocks, construct an optimized portfolio, and project its future performance. The entire process is configurable via the `config.yaml` file. It also contains the code we used to generate various graphs and tables used in our final writeup
 
 ## Investment Pipeline
 
