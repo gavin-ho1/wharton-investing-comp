@@ -1,6 +1,6 @@
 # Wharton Investing Competition Codebase
 
-## This repository contains all trading strategies, stock filtering, portfolio allocations, backesting, and projections used in the 2025-2026 [Wharton Global High School Investment Competition](https://globalyouth.wharton.upenn.edu/competitions/investment-competition/) along with detailed descriptions of each part of the code. This repository will go public after the final report submission date.
+## This repository contains all stock filtering, portfolio allocation strategies, backesting, and projections used in the 2025-2026 [Wharton Global High School Investment Competition](https://globalyouth.wharton.upenn.edu/competitions/investment-competition/) along with detailed descriptions of each part of the code. This repository will go public after the final report submission date.
 
 It contains a multi-phase quantitative investing workflow designed to identify promising stocks, construct an optimized portfolio, and project its future performance. The entire process is configurable via the `config.yaml` file. It also contains the code we used to generate various graphs and tables used in our final report.
 
