@@ -19,8 +19,7 @@ def create_metrics_table(data, output_image='metrics_interest.png'):
     styles = [
         # Table wide settings
         {'selector': '', 'props': [
-            ('border-collapse', 'collapse'),
-            ('font-family', '"Times New Roman", Times, serif'), # Match image font
+            ('border-collapse', 'collapse')
         ]},
         # Header Styling
         {'selector': 'th', 'props': [
