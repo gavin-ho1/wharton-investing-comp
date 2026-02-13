@@ -9,3 +9,4 @@ networkx
 PyPortfolioOpt
 quantstats
 ipython
+scikit-learn
