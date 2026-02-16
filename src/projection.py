@@ -334,7 +334,17 @@ def analyze_and_save_projections(portfolio_paths, volatility_paths, config, pric
     ).item()
 
     # Ensure native float to avoid numpy float issues
-    spy_total_return = float((benchmark_monthly_prices.iloc[-1] / benchmark_monthly_prices.iloc[0]) - 1)
+    # Use .item() to extract the scalar value from the single-element Series
+    val_end = benchmark_monthly_prices.iloc[-1]
+    val_start = benchmark_monthly_prices.iloc[0]
+
+    # If these are Series, .item() converts them to a float
+    if isinstance(val_end, pd.Series):
+        val_end = val_end.item()
+    if isinstance(val_start, pd.Series):
+        val_start = val_start.item()
+
+    spy_total_return = float((val_end / val_start) - 1)
 
     # Create and format comparison table
     comp_data = {

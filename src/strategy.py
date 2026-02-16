@@ -55,7 +55,7 @@ def get_target_weights_for_date(date, all_prices, all_fundamentals, config):
     # Phase 4: Correlation & Diversification
     hybrid_scores = calculate_hybrid_score(full_scores_df, quant_scores, config['correlation_analysis']['hybrid_score_weights'])
     correlation_matrix = calculate_correlation_matrix(prices_to_date, hybrid_scores.index.tolist(), config['correlation_analysis']['lookback_years'])
-    diversified_tickers, _ = filter_correlated_stocks(
+    diversified_tickers, _, _, _ = filter_correlated_stocks(
         correlation_matrix, hybrid_scores, fundamentals_to_date,
         config['correlation_analysis']['correlation_threshold'],
         config['correlation_analysis']['correlation_keep_percentile'],
