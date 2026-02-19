@@ -181,8 +181,15 @@ def analyze_and_save_projections(portfolio_paths, volatility_paths, config, pric
     time_steps = np.arange(len(portfolio_paths))
     percentile_ranks = np.argsort(np.argsort(final_values)) / (n_paths - 1)
     path_colors = [cmap(rank) for rank in percentile_ranks]
-    highlight_percentiles = [10, 50, 90]
-    highlight_colors = {10: '#8B0000', 50: '#000000', 90: '#006400'}
+    highlight_percentiles = proj_config['plot_percentiles']
+
+    base_colors = ['#8B0000', '#000000', '#006400']
+
+    highlight_colors = {
+        p: base_colors[i % len(base_colors)]
+        for i, p in enumerate(highlight_percentiles)
+    }
+
 
     def val_to_pct_format(y, pos):
         return f'{(y / initial_investment - 1) * 100:,.0f}%'
