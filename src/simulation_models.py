@@ -3,6 +3,24 @@
 
 import numpy as np
 
+def _compute_vol_targeted_returns(raw_returns, trailing_returns, target_vol, periods_per_year, max_leverage):
+    """
+    Computes path-level vol-targeted returns by scaling raw returns with leverage.
+    """
+    n_simulations = raw_returns.shape[0]
+    leverage = np.ones(n_simulations)
+
+    if trailing_returns.shape[0] >= 2:
+        realized_vol = trailing_returns.std(axis=0, ddof=1) * np.sqrt(periods_per_year)
+        valid_mask = np.isfinite(realized_vol) & (realized_vol > 0)
+        leverage[valid_mask] = target_vol / realized_vol[valid_mask]
+
+    leverage = np.clip(leverage, 0.0, max_leverage)
+
+    # Prevent invalid portfolio values when leverage meets large negative returns.
+    scaled_returns = np.maximum(raw_returns * leverage, -0.99)
+    return scaled_returns, leverage
+
 def _get_positive_definite_matrix(matrix, epsilon=1e-6, max_tries=10):
     """
     Ensures a matrix is positive definite by adding a small identity matrix.
@@ -96,7 +114,7 @@ def run_gbm_simulation(hist_returns, config, initial_investment, initial_weights
     
     # --- 1. Get Parameters ---
     return_shrinkage = proj_config.get('return_shrinkage', 1.0)
-    mean_returns = hist_returns.mean() * 252 * return_shrinkage
+    mean_returns = hist_returns.mean().values * 252 * return_shrinkage
     if return_shrinkage != 1.0:
         print(f"  - Applying return shrinkage factor: {return_shrinkage}")
     cov_matrix = hist_returns.cov() * 252
@@ -112,6 +130,11 @@ def run_gbm_simulation(hist_returns, config, initial_investment, initial_weights
     enable_monthly_rebalancing = proj_config.get('enable_monthly_rebalancing', False)
     alpha = proj_config.get('rebalancing_alpha', 0.7)
     max_weight = opt_config.get('max_weight_per_stock', 0.1)
+    enable_vol_targeting = proj_config.get('enable_target_vol_scaling', False)
+    target_vol = proj_config.get('target_volatility', 0.15)
+    max_leverage = max(float(proj_config.get('max_leverage', 3.0)), 0.0)
+    vol_lookback_months = int(proj_config.get('vol_target_lookback_months', 6))
+    vol_lookback_months = max(vol_lookback_months, 2)
     
     # --- 2. Initialize Arrays ---
     portfolio_values = np.zeros((n_months + 1, n_simulations))
@@ -119,8 +142,16 @@ def run_gbm_simulation(hist_returns, config, initial_investment, initial_weights
     
     # Store last month's returns for each simulation to calculate momentum
     last_month_returns = np.zeros((len(initial_weights), n_simulations))
+    vol_target_returns_buffer = np.zeros((vol_lookback_months, n_simulations))
+    vol_target_obs_count = 0
+    vol_target_ptr = 0
 
     print(f"Running {n_simulations} GBM simulations for {horizon_years} years (Monthly Steps)...")
+    if enable_vol_targeting:
+        print(
+            f"  - Dynamic vol targeting enabled "
+            f"(target={target_vol:.2%}, lookback={vol_lookback_months} months, max_leverage={max_leverage:.2f})"
+        )
     
     # --- 3. Run Simulation Loop ---
     current_weights = np.tile(initial_weights, (n_simulations, 1)).T
@@ -141,7 +172,22 @@ def run_gbm_simulation(hist_returns, config, initial_investment, initial_weights
         last_month_returns = monthly_asset_returns # Save for next iteration
         
         # --- Update portfolio value ---
-        portfolio_return = np.sum(current_weights * monthly_asset_returns, axis=0)
+        raw_portfolio_return = np.sum(current_weights * monthly_asset_returns, axis=0)
+        if enable_vol_targeting:
+            trailing_returns = vol_target_returns_buffer[:vol_target_obs_count, :]
+            portfolio_return, _ = _compute_vol_targeted_returns(
+                raw_portfolio_return,
+                trailing_returns,
+                target_vol=target_vol,
+                periods_per_year=12,
+                max_leverage=max_leverage,
+            )
+            vol_target_returns_buffer[vol_target_ptr, :] = raw_portfolio_return
+            vol_target_ptr = (vol_target_ptr + 1) % vol_lookback_months
+            vol_target_obs_count = min(vol_target_obs_count + 1, vol_lookback_months)
+        else:
+            portfolio_return = raw_portfolio_return
+
         portfolio_values[t, :] = portfolio_values[t-1, :] * (1 + portfolio_return)
         
         # --- Update weights for drift (if not rebalancing) ---
@@ -169,6 +215,11 @@ def run_multi_asset_heston_merton(hist_returns, benchmark_returns, config, initi
     enable_monthly_rebalancing = proj_config.get('enable_monthly_rebalancing', False)
     alpha = proj_config.get('rebalancing_alpha', 0.7)
     max_weight = opt_config.get('max_weight_per_stock', 0.1)
+    enable_vol_targeting = proj_config.get('enable_target_vol_scaling', False)
+    target_vol = proj_config.get('target_volatility', 0.15)
+    max_leverage = max(float(proj_config.get('max_leverage', 3.0)), 0.0)
+    vol_lookback_months = int(proj_config.get('vol_target_lookback_months', 6))
+    vol_lookback_months = max(vol_lookback_months, 2)
     
     # --- 2. Set Up Simulation Parameters ---
     n_assets = len(initial_weights)
@@ -233,6 +284,15 @@ def run_multi_asset_heston_merton(hist_returns, benchmark_returns, config, initi
     portfolio_values = np.zeros((n_months + 1, n_simulations))
     portfolio_values[0, :] = initial_investment
     current_weights = np.tile(initial_weights, (n_simulations, 1)).T
+    vol_target_returns_buffer = np.zeros((vol_lookback_months, n_simulations))
+    vol_target_obs_count = 0
+    vol_target_ptr = 0
+
+    if enable_vol_targeting:
+        print(
+            f"  - Dynamic vol targeting enabled "
+            f"(target={target_vol:.2%}, lookback={vol_lookback_months} months, max_leverage={max_leverage:.2f})"
+        )
     
     for t in range(1, n_months + 1):
         # --- Rebalance at the start of the month ---
@@ -249,7 +309,22 @@ def run_multi_asset_heston_merton(hist_returns, benchmark_returns, config, initi
         current_month_start_idx = (t - 1) * days_per_month
         current_month_end_idx = t * days_per_month
         month_asset_returns = (asset_prices[current_month_end_idx] / asset_prices[current_month_start_idx]) - 1
-        monthly_portfolio_return = np.sum(current_weights * month_asset_returns, axis=0)
+        raw_monthly_portfolio_return = np.sum(current_weights * month_asset_returns, axis=0)
+        if enable_vol_targeting:
+            trailing_returns = vol_target_returns_buffer[:vol_target_obs_count, :]
+            monthly_portfolio_return, _ = _compute_vol_targeted_returns(
+                raw_monthly_portfolio_return,
+                trailing_returns,
+                target_vol=target_vol,
+                periods_per_year=12,
+                max_leverage=max_leverage,
+            )
+            vol_target_returns_buffer[vol_target_ptr, :] = raw_monthly_portfolio_return
+            vol_target_ptr = (vol_target_ptr + 1) % vol_lookback_months
+            vol_target_obs_count = min(vol_target_obs_count + 1, vol_lookback_months)
+        else:
+            monthly_portfolio_return = raw_monthly_portfolio_return
+
         portfolio_values[t, :] = portfolio_values[t-1, :] * (1 + monthly_portfolio_return)
         
         # --- Update weights for drift if not rebalancing next period ---
@@ -272,7 +347,7 @@ def run_heston_merton_simulation(hist_returns, config, initial_investment):
     proj_config = config['projection']
     model_config = proj_config['simulation_model']
     heston_params = model_config['heston_params']
-    merton_params = model_config['merton_params']
+    merton_params = model_config.get('merton_params', {'lambda': 0.0, 'mu_j': 0.0, 'sigma_j': 0.0})
     
     use_sv = model_config['use_stochastic_vol']
     use_jumps = model_config['use_jump_diffusion']
@@ -289,15 +364,28 @@ def run_heston_merton_simulation(hist_returns, config, initial_investment):
     horizon_years = proj_config['horizon_years']
     n_steps = horizon_years * 252
     dt = 1 / 252
+    enable_vol_targeting = proj_config.get('enable_target_vol_scaling', False)
+    target_vol = proj_config.get('target_volatility', 0.15)
+    max_leverage = max(float(proj_config.get('max_leverage', 3.0)), 0.0)
+    vol_lookback_days = int(proj_config.get('vol_target_lookback_days', 63))
+    vol_lookback_days = max(vol_lookback_days, 2)
 
     portfolio_values = np.zeros((n_steps + 1, n_simulations))
     portfolio_values[0] = initial_investment
     variance_paths = np.zeros((n_steps + 1, n_simulations))
     variance_paths[0] = v0
+    vol_target_returns_buffer = np.zeros((vol_lookback_days, n_simulations))
+    vol_target_obs_count = 0
+    vol_target_ptr = 0
     k = np.exp(mu_j + 0.5 * sigma_j**2) - 1
     
     model_desc = [name for name, flag in [("Heston", use_sv), ("Merton", use_jumps)] if flag]
     print(f"Running {n_simulations} {'-'.join(model_desc)} simulations for {horizon_years} years (Daily Steps)...")
+    if enable_vol_targeting:
+        print(
+            f"  - Dynamic vol targeting enabled "
+            f"(target={target_vol:.2%}, lookback={vol_lookback_days} days, max_leverage={max_leverage:.2f})"
+        )
 
     Z_s = np.random.normal(0, 1, size=(n_steps, n_simulations))
     Z_v = np.random.normal(0, 1, size=(n_steps, n_simulations))
@@ -327,7 +415,24 @@ def run_heston_merton_simulation(hist_returns, config, initial_investment):
         
         drift = (mu - 0.5 * current_variance - drift_adjustment) * dt
         diffusion = np.sqrt(current_variance) * dW_s[i]
-        portfolio_values[i+1] = S_t * np.exp(drift + diffusion) * (1 + jump_component)
+        raw_portfolio_return = np.exp(drift + diffusion) * (1 + jump_component) - 1
+
+        if enable_vol_targeting:
+            trailing_returns = vol_target_returns_buffer[:vol_target_obs_count, :]
+            managed_portfolio_return, _ = _compute_vol_targeted_returns(
+                raw_portfolio_return,
+                trailing_returns,
+                target_vol=target_vol,
+                periods_per_year=252,
+                max_leverage=max_leverage,
+            )
+            vol_target_returns_buffer[vol_target_ptr, :] = raw_portfolio_return
+            vol_target_ptr = (vol_target_ptr + 1) % vol_lookback_days
+            vol_target_obs_count = min(vol_target_obs_count + 1, vol_lookback_days)
+        else:
+            managed_portfolio_return = raw_portfolio_return
+
+        portfolio_values[i+1] = S_t * (1 + managed_portfolio_return)
 
     print("Heston-Merton simulation complete.")
     monthly_indices = np.linspace(0, n_steps, horizon_years * 12 + 1, dtype=int)

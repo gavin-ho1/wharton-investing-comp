@@ -87,8 +87,11 @@ projection:
   rebalance_annually: false        # Set to true for annual rebalancing instead of monthly
   rebalancing_alpha: 1.0          
   return_shrinkage: 0.75          
-  target_volatility: 0.05         
+  target_volatility: 0.15          # S&P's historical volatility level
   enable_target_vol_scaling: false
+  max_leverage: 1
+  vol_target_lookback_days: 63
+  vol_target_lookback_months: 6
 
   plot_percentiles: [10, 50, 90]
   summary_filename: 'projection_summary.csv'
@@ -98,33 +101,33 @@ projection:
   histogram_plot_filename: 'final_values_histogram.png'
 
   simulation_model:
-    simulation_level: 'asset'   # Keep 'asset' level for more realistic distributional tails
+    simulation_level: 'asset' # Keep 'asset' level for more realistic distributional tails
     use_stochastic_vol: true
     use_jump_diffusion: true
 
     # Tuned Heston model parameters for realistic volatility dynamics
     heston_params:
-      kappa: 3.5     
-      theta: 0.03    
-      sigma_v: 0.30  
-      rho: -0.5      
+      kappa: 1.2      
+      theta: 0.08     
+      sigma_v: 0.65   
+      rho: -0.80      
 
     # Tuned Merton jump-diffusion parameters (portfolio-level)
     merton_params:
-      lambda: 0.10   
-      mu_j: -0.08    
-      sigma_j: 0.20  
+      lambda: 0.25    
+      mu_j: -0.18     
+      sigma_j: 0.35   
 
     # Asset-level stochastic parameters for systemic/idiosyncratic shocks
     asset_level_params:
       systemic_jumps:
-        lambda_sys: 0.05   
-        mu_sys: -0.05
-        sigma_sys: 0.12
+        lambda_sys: 0.15
+        mu_sys: -0.15
+        sigma_sys: 0.25
       idiosyncratic_jumps:
-        lambda_id: 0.02   
-        mu_id: -0.10      
-        sigma_id: 0.15
+        lambda_id: 0.06
+        mu_id: -0.25
+        sigma_id: 0.30
 
 # ------------------------------------------------------------
 # Phase 7: Backtesting

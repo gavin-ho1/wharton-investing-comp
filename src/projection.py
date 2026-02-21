@@ -30,32 +30,15 @@ def run_monte_carlo_simulation(weights, prices, config):
     initial_weights = weights['Weight'].values
     initial_investment = proj_config['initial_investment']
 
-    # --- Target Volatility Scaling ---
+    # --- Dynamic Volatility Targeting ---
     if proj_config.get('enable_target_vol_scaling', False):
-        print("  - Target volatility scaling is enabled.")
         target_vol = proj_config.get('target_volatility', 0.15)
-        
-        # Calculate annualized historical portfolio volatility
-        cov_matrix = daily_returns.cov() * 252 # Annualize covariance
-        port_var = initial_weights.T @ cov_matrix @ initial_weights
-        port_vol = np.sqrt(port_var)
-        
-        if port_vol > 0:
-            alpha = target_vol / port_vol
-            alpha = min(alpha, 1.0) # Do not increase exposure, only scale down
-            
-            print(f"  - Historical annualized volatility: {port_vol:.2%}")
-            print(f"  - Target volatility: {target_vol:.2%}")
-            print(f"  - Scaling factor (alpha): {alpha:.4f}")
-            
-            scaled_weights = initial_weights * alpha
-            
-            # Renormalize weights to sum to 1 to remain fully invested
-            initial_weights = scaled_weights / scaled_weights.sum()
-            
-            print(f"  - New scaled and renormalized weights sum: {initial_weights.sum():.2%}")
-        else:
-            print("  - Warning: Portfolio volatility is zero. Skipping scaling.")
+        max_leverage = proj_config.get('max_leverage', 3.0)
+        print(
+            "  - Dynamic target volatility is enabled "
+            f"(target={target_vol:.2%}, max_leverage={max_leverage:.2f})."
+        )
+        print("  - Returns will be scaled path-by-path during simulation.")
 
 
     # --- 2. Batch Processing Setup ---
