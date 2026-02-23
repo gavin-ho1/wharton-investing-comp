@@ -276,6 +276,10 @@ This is the most sophisticated model available. It simulates each individual ass
 
 When `enable_monthly_rebalancing` is set to `true`, the simulation adjusts the portfolio weights at the start of each simulated month. This hybrid strategy blends the initial, fundamentally-derived weights with a momentum factor based on the previous month's simulated returns. The rebalancing logic is governed by an `alpha` parameter, which determines the weighting between the fundamental and momentum components.
 
+### Volatility Targeting
+
+Volatility targeting can be enabled or disabled via the `enable_target_vol_scaling` flag in `config.yaml`. When enabled, the portfolio's volatility is scaled to match the `target_volatility` parameter (e.g., `0.15` to match the S&P 500's historical volatility). This tends to bring Sharpe Ratio back up at the cost of lower returns.
+
 ### Projection Outputs
 
 The primary output of this phase is a multi-plot "tearsheet" visualization (`projection_tearsheet.png`) that provides a comprehensive overview of the simulation results. It includes:
@@ -285,3 +289,15 @@ The primary output of this phase is a multi-plot "tearsheet" visualization (`pro
 4.  **Benchmark Comparison Table:** A table comparing the average performance of the simulation against a historical equivalent period for a benchmark ticker (e.g., SPY).
 
 Additional outputs, including a summary CSV and standalone versions of the plots, are also saved to the `reports/` and `data/` directories. Images used in our final report, along with the code used to generate them can be found in `final-images/`.
+
+Stress test configurations and results can be found in the `stress-tests/` directory:
+
+```
+stress-tests/
+├── covid/              # Base COVID-level simulation
+│   ├── config.yaml     # Parameters in this file are set to model the COVID-19 pandemic
+│   └── reports/        # Reports from the base COVID-level simulation (e.g. projection_tearsheet.png)
+└── covid-vol-target/   # COVID scenario with volatility targeting
+    ├── config.yaml     # Parameters in this file are set to model the COVID-19 pandemic with volatility targeting
+    └── reports/        # Reports from the COVID scenario with volatility targeting (e.g. projection_tearsheet.png)
+```
