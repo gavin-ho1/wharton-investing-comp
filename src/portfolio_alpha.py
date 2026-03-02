@@ -5,14 +5,15 @@ import pandas as pd
 import yfinance as yf
 import yaml
 from datetime import datetime, timedelta
+import os
 from src.financial_metrics import calculate_beta_from_returns
 
-def get_config():
+def get_config(config_path='config.yaml'):
     """Reads the config.yaml file."""
-    with open('config.yaml', 'r') as file:
+    with open(config_path, 'r') as file:
         return yaml.safe_load(file)
 
-def calculate_portfolio_alpha():
+def calculate_portfolio_alpha(config_path='config.yaml'):
     """
     Downloads portfolio, benchmark, and risk-free rate data, then uses the
     shared financial_metrics module to calculate beta and finally computes alpha.
@@ -21,11 +22,12 @@ def calculate_portfolio_alpha():
     print("--- Calculating Portfolio Alpha ---")
     
     # 1. Load configuration and portfolio weights
-    config = get_config()
+    config = get_config(config_path)
+    data_config = config['data_collection']
     benchmark_ticker = config['quant_factor_analysis']['benchmark_ticker']
     risk_free_ticker = config['quant_factor_analysis']['risk_free_ticker']
     lookback_years = config['correlation_analysis']['lookback_years']
-    weights_filepath = f"data/{config['portfolio_optimization']['output_filename']}"
+    weights_filepath = os.path.join(data_config['output_dir'], config['portfolio_optimization']['output_filename'])
     
     try:
         allocations_df = pd.read_csv(weights_filepath, index_col=0)
@@ -41,7 +43,7 @@ def calculate_portfolio_alpha():
     # 3. Download all necessary data in one go
     print("Downloading financial data...")
     all_tickers = [benchmark_ticker, risk_free_ticker] + portfolio_tickers
-    all_data = yf.download(all_tickers, start=start_date, end=end_date, progress=False)
+    all_data = yf.download(all_tickers, start=start_date, end=end_date, progress=False, auto_adjust=False)
     
     if all_data.empty:
         print("Error: Could not download any financial data.")

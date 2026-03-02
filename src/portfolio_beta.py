@@ -5,14 +5,15 @@ import pandas as pd
 import yfinance as yf
 import yaml
 from datetime import datetime, timedelta
+import os
 from src.financial_metrics import calculate_beta_from_returns
 
-def get_config():
+def get_config(config_path='config.yaml'):
     """Reads the config.yaml file."""
-    with open('config.yaml', 'r') as file:
+    with open(config_path, 'r') as file:
         return yaml.safe_load(file)
 
-def calculate_portfolio_beta():
+def calculate_portfolio_beta(config_path='config.yaml'):
     """
     Downloads necessary data and uses the shared financial_metrics module
     to calculate the overall portfolio beta based on the optimized allocations.
@@ -20,10 +21,11 @@ def calculate_portfolio_beta():
     print("--- Calculating Portfolio Beta ---")
     
     # 1. Load configuration and portfolio weights
-    config = get_config()
+    config = get_config(config_path)
+    data_config = config['data_collection']
     benchmark_ticker = config['quant_factor_analysis']['benchmark_ticker']
     lookback_years = config['correlation_analysis']['lookback_years']
-    weights_filepath = f"data/{config['portfolio_optimization']['output_filename']}"
+    weights_filepath = os.path.join(data_config['output_dir'], config['portfolio_optimization']['output_filename'])
     
     try:
         allocations_df = pd.read_csv(weights_filepath, index_col=0)
@@ -39,13 +41,13 @@ def calculate_portfolio_beta():
     # 3. Download benchmark and portfolio data
     print(f"Downloading benchmark data: {benchmark_ticker}...")
     try:
-        benchmark_prices = yf.download(benchmark_ticker, start=start_date, end=end_date, progress=False)['Close']
+        benchmark_prices = yf.download(benchmark_ticker, start=start_date, end=end_date, progress=False, auto_adjust=False)['Close']
     except Exception as e:
         print(f"An exception occurred while downloading benchmark data: {e}")
         return
 
     print(f"Downloading price data for {len(portfolio_tickers)} portfolio tickers...")
-    portfolio_prices = yf.download(portfolio_tickers, start=start_date, end=end_date, progress=False)
+    portfolio_prices = yf.download(portfolio_tickers, start=start_date, end=end_date, progress=False, auto_adjust=False)
     
     if portfolio_prices.empty:
         print("Error: Could not download any price data for portfolio tickers.")

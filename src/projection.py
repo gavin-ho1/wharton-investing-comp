@@ -119,7 +119,7 @@ def analyze_and_save_projections(portfolio_paths, volatility_paths, config, pric
     start_date = end_date - pd.DateOffset(years=horizon_years)
     
     print(f"Fetching {horizon_years} years of historical data for benchmark: {benchmark_ticker}...")
-    benchmark_prices = yf.download(benchmark_ticker, start=start_date, end=end_date, progress=False)['Close']
+    benchmark_prices = yf.download(benchmark_ticker, start=start_date, end=end_date, progress=False, auto_adjust=False)['Close']
 
     # --- 2. Calculate Statistics ---
     initial_investment = config['projection']['initial_investment']
