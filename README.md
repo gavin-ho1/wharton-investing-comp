@@ -14,8 +14,9 @@ The investment pipeline consists of the following phases:
 4.  **Correlation & Diversification Analysis:** Analyzes the correlation between stocks and ensures diversification across sectors.
 5.  **Portfolio Optimization:** Constructs an optimal portfolio based on a specified objective function (e.g., maximizing Sharpe ratio).
 6.  **Projection:** Runs a Monte Carlo simulation to project the future performance of the optimized portfolio.
-7.  **Backtesting:** Performs a historical backtest of the investment strategy.
-8.  **Monitoring:** Generates a monitoring report on the recent performance of the portfolio.
+7.  **Backtesting:** Performs a historical backtest of the investment strategy using annual rebalancing and a 3-year initial buffer before optional withdrawals.
+8.  **Monitoring:** Generates a daily monitoring report for the recent performance (last 365 days) of the optimized portfolio.
+9.  **Portfolio Analytics:** Auxiliary scripts calculate the overall portfolio Beta and Alpha.
 
 ## Configuration
 
@@ -29,7 +30,7 @@ To run the main investment pipeline, execute the following command:
 python3 main.py
 ```
 
-The `main.py` script can also be used to run the analytical functions (backtesting and monitoring) by uncommenting the relevant lines in the `main()` function.
+The `main.py` script orchestrates Phases 1-6 (Investment Pipeline) and additionally runs the analytical functions (Backtesting, Monitoring, Beta/Alpha calculation). These can be configured or disabled within the `main()` function of `main.py`.
 
 ## Scoring Equations
 
@@ -60,7 +61,7 @@ $$
 *   **EV/EBITDA Ratio:**
 
 $$
-\text{EV/EBITDA} = \frac{\text{Market Cap} + \text{Total Debt} - \text{Cash}}{\text{EBIT} + \text{Depreciation}}
+\text{EV/EBITDA} = \frac{\text{Market Cap} + \text{Total Liab} - \text{Cash}}{\text{EBIT} + \text{Depreciation}}
 $$
 
 *   **Revenue CAGR (5-Year):**
@@ -108,6 +109,10 @@ The final Fundamental Score is a weighted average of these category scores, with
 $$
 \text{Fundamental Score} = (w_{\text{value}} \cdot S_{\text{Value}}) + (w_{\text{growth}} \cdot S_{\text{Growth}}) + (w_{\text{quality}} \cdot S_{\text{Quality}})
 $$
+
+**Note on ETFs**: ETFs are included in the universe but receive a neutral Fundamental Score of 0.5, as they lack company-specific financial metrics.
+
+**Always-Include Tickers**: A list of tickers in `always-include.txt` is guaranteed to bypass initial filters and be added back to the universe after Phase 4, provided they meet minimum price requirements.
 
 ---
 
@@ -189,6 +194,10 @@ For each sector, the process is as follows:
 
 -   **Filter Within Clusters:** For each identified cluster, the stocks are ranked by their Composite Score. The script then keeps only the top-performing stocks, determined by the `correlation_keep_percentile` parameter. For example, if a cluster has 10 stocks and the percentile is 0.2, only the top 2 stocks (ranked by Composite Score) are retained for the next phase. The rest are filtered out. A minimum of one stock is always kept from any cluster.
 
+### 3. Final Universe Construction
+
+After the sector-based filtering, any tickers from the `always-include.txt` list that were previously filtered out (e.g., due to low fundamental scores) are added back to the final universe, provided they pass the minimum price filter.
+
 This methodology ensures that the final stock universe is not only composed of high-scoring stocks but is also diversified within each sector, reducing the risk of holding multiple similar assets that are likely to perform in the same way.
 
 ---
@@ -213,6 +222,15 @@ Where:
 - **$\delta$** : The risk aversion parameter, which is set in `config.yaml`. This value quantifies the investor's penalty for taking on risk. A higher $\delta$ leads to a more conservative (lower-risk) portfolio.
 
 The optimizer seeks to find the weights $w$ that maximize this function, subject to constraints such as weight bounds (e.g., long-only, max weight per stock).
+
+### Two-Stage Market Cap Optimization
+
+To ensure a balanced exposure across different market segments, the script implements a two-stage optimization process:
+
+1.  **Classification:** All tickers in the final universe are classified into **Large-Cap** or **Small/Mid-Cap** groups based on a `large_cap_threshold_usd` parameter (default: $10B). ETFs are automatically classified as Large-Cap.
+2.  **Target Allocation:** The portfolio is divided between these two groups based on `portfolio_allocation` targets in `config.yaml` (default: 45% Large-Cap, 55% Small/Mid-Cap).
+3.  **Independent Optimization:** Each group is optimized independently using the Mean-Variance framework.
+4.  **Weight Guarantees:** Any ticker from the "Always-Include" list is guaranteed a minimum allocation (default: 2%) within its respective group optimization.
 
 ---
 
@@ -274,7 +292,9 @@ This is the most sophisticated model available. It simulates each individual ass
 
 ### Dynamic Monthly Rebalancing
 
-When `enable_monthly_rebalancing` is set to `true`, the simulation adjusts the portfolio weights at the start of each simulated month. This hybrid strategy blends the initial, fundamentally-derived weights with a momentum factor based on the previous month's simulated returns. The rebalancing logic is governed by an `alpha` parameter, which determines the weighting between the fundamental and momentum components.
+When `enable_monthly_rebalancing` is set to `true`, the simulation adjusts the portfolio weights at the start of each simulated month. This hybrid strategy blends the initial, fundamentally-derived weights with a momentum factor based on the previous month's simulated returns. The rebalancing logic is governed by a `rebalancing_alpha` parameter, which determines the weighting between the fundamental and momentum components.
+    
+**Return Shrinkage**: A `return_shrinkage` factor (default: 0.75) is applied to historical mean returns to provide more conservative projections.
 
 ### Volatility Targeting
 
@@ -283,7 +303,7 @@ Volatility targeting can be enabled or disabled via the `enable_target_vol_scali
 ### Projection Outputs
 
 The primary output of this phase is a multi-plot "tearsheet" visualization (`projection_tearsheet.png`) that provides a comprehensive overview of the simulation results. It includes:
-1.  **Simulation Paths Plot:** A log-scaled chart showing a sample of the simulated portfolio value paths over time, with key percentiles (10th, 50th, 90th) highlighted.
+1.  **Simulation Paths Plot:** A log-scaled chart showing a sample of the simulated portfolio value paths over time, with key percentiles (10th, 50th, 90th) highlighted. A separate `simulation_paths_full.png` shows all simulated paths.
 2.  **Final Value Distribution:** A histogram showing the distribution of the final portfolio values across all simulations.
 3.  **Percentile Statistics Table:** A table summarizing key performance metrics (CAGR, Volatility, Sharpe Ratio) for different percentile outcomes.
 4.  **Benchmark Comparison Table:** A table comparing the average performance of the simulation against a historical equivalent period for a benchmark ticker (e.g., SPY).
