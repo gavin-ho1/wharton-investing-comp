@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import os
 import yaml
 
-def load_tickers(filepath="tickers.txt"):
+def load_tickers(filepath):
     """Loads tickers from a text file, one per line."""
     print(f"Loading tickers from {filepath}...")
     with open(filepath, 'r') as f:
@@ -128,7 +128,7 @@ def run_data_collection(config_path="config.yaml"):
         config = config_full['data_collection']
         benchmark_ticker = config_full['quant_factor_analysis']['benchmark_ticker']
         
-    tickers = load_tickers()
+    tickers = load_tickers(config.get('tickers_filename', 'stock-lists/tickers.txt'))
     always_include_tickers = load_always_include_tickers(config_path)
     
     with open(config['etf_list_filename'], 'r') as f:

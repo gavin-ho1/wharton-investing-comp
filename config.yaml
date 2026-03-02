@@ -12,7 +12,8 @@ data_collection:
   prices_filename: 'prices_adj_close_usd.csv'
   dividends_filename: 'dividends.csv'
   fundamentals_filename_prefix: 'fundamentals'
-  etf_list_filename: 'etf-list.txt'
+  etf_list_filename: 'stock-lists/etf-list.txt'
+  tickers_filename: 'stock-lists/tickers.txt'
   min_stock_price: 5.0
 
 # ------------------------------------------------------------
@@ -25,7 +26,7 @@ fundamental_screening:
     Quality: 0.1666       
   screening_percentile_cutoff: 0.65  # Keep top (1-x)% of stocks
   
-  always_include_filename: 'always-include.txt' 
+  always_include_filename: 'stock-lists/always-include.txt' 
   output_scores_filename: 'fundamental_scores.csv'
   output_tickers_filename: 'screened_tickers.txt'
 
