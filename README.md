@@ -8,29 +8,34 @@ It contains a multi-phase quantitative investing workflow designed to identify p
 
 The investment pipeline consists of the following phases:
 
-1.  **Data Collection:** Gathers historical price data, dividends, and fundamental financial data for a universe of stocks.
-2.  **Fundamental Screening:** Ranks stocks based on fundamental metrics like value, growth, and quality.
-3.  **Quantitative Factor Analysis:** Scores stocks based on quantitative factors such as momentum, volatility, and Sharpe ratio.
-4.  **Correlation & Diversification Analysis:** Analyzes the correlation between stocks and ensures diversification across sectors.
-5.  **Portfolio Optimization:** Constructs an optimal portfolio based on a specified objective function (e.g., maximizing Sharpe ratio).
-6.  **Projection:** Runs a Monte Carlo simulation to project the future performance of the optimized portfolio.
-7.  **Backtesting:** Performs a historical backtest of the investment strategy using annual rebalancing and a 3-year initial buffer before optional withdrawals.
-8.  **Monitoring:** Generates a daily monitoring report for the recent performance (last 365 days) of the optimized portfolio.
-9.  **Portfolio Analytics:** Auxiliary scripts calculate the overall portfolio Beta and Alpha.
+1.  [**Data Collection:**](config.yaml#L7) Gathers historical price data, dividends, and fundamental financial data for a universe of stocks.
+2.  [**Fundamental Screening:**](config.yaml#L22) Ranks stocks based on fundamental metrics like value, growth, and quality.
+3.  [**Quantitative Factor Analysis:**](config.yaml#L36) Scores stocks based on quantitative factors such as momentum, volatility, and Sharpe ratio.
+4.  [**Correlation & Diversification Analysis:**](config.yaml#L50) Analyzes the correlation between stocks and ensures diversification across sectors.
+5.  [**Portfolio Optimization:**](config.yaml#L68) Constructs an optimal portfolio based on a specified objective function (e.g., maximizing Sharpe ratio).
+6.  [**Projection:**](config.yaml#L79) Runs a Monte Carlo simulation to project the future performance of the optimized portfolio.
+7.  [**Backtesting:**](config.yaml#L136) Performs a historical backtest of the investment strategy using annual rebalancing and a 3-year initial buffer before optional withdrawals.
+8.  [**Monitoring:**](config.yaml#L149) Generates a daily monitoring report for the recent performance (last 365 days) of the optimized portfolio.
+9.  [**Portfolio Analytics:**](main.py#L19) Auxiliary scripts calculate the overall portfolio Beta and Alpha.
 
 ## Configuration
 
-The behavior of the investment pipeline can be customized by editing the `config.yaml` file. This file contains parameters for each phase of the pipeline, such as lookback periods, scoring weights, and optimization settings.
+The behavior of the investment pipeline can be customized by editing the `config.yaml` file. This file contains parameters for each phase of the pipeline, such as lookback periods, scoring weights, and optimization settings. See below for more detailed information on different settings, options and parameters. 
 
 ## Usage
+Requirements can be installed with `requirements.txt`:
 
-To run the main investment pipeline, execute the following command:
+```bash
+pip install -r requirements.txt
+```
+
+The main investment pipeline is executed through `main.py`:
 
 ```bash
 python3 main.py
 ```
 
-The `main.py` script orchestrates Phases 1-6 (Investment Pipeline) and additionally runs the analytical functions (Backtesting, Monitoring, Beta/Alpha calculation). These can be configured or disabled within the `main()` function of `main.py`.
+The `main.py` script orchestrates Phases 1-6 (Investment Pipeline) and additionally runs the analytical functions (Backtesting, Monitoring, Beta/Alpha calculation). These can be configured or disabled within the `main()` function of `main.py` by commenting out specified functions.
 
 ## Scoring Equations
 
@@ -38,7 +43,7 @@ The scoring methodology is divided into two main components: a **Fundamental Sco
 
 ---
 
-### Fundamental Score
+### [Fundamental Score](config.yaml#L22)
 
 The Fundamental Score evaluates stocks based on their financial health and business performance. It is derived from three sub-categories: Value, Growth, and Quality.
 
@@ -116,7 +121,7 @@ $$
 
 ---
 
-### Quant Score
+### [Quant Score](config.yaml#L36)
 
 The Quant Score evaluates stocks based on market-driven (price-based) factors.
 
@@ -162,7 +167,7 @@ $$
 
 ---
 
-### Composite Score
+### [Composite Score](config.yaml#L55)
 
 The Composite Score is the final, unified metric used to rank stocks before the diversification phase. It provides a holistic measure of a stock's attractiveness by combining its fundamental strength with its market-based (quantitative) characteristics.
 
@@ -174,7 +179,7 @@ $$
 
 ---
 
-## Correlation & Diversification
+## [Correlation & Diversification](config.yaml#L50)
 
 After scoring, the script implements a sophisticated filtering process to enhance portfolio diversification. This phase aims to reduce concentration risk by removing stocks that are highly correlated with their peers within the same sector. The process uses a graph-based clustering approach.
 
@@ -202,7 +207,7 @@ This methodology ensures that the final stock universe is not only composed of h
 
 ---
 
-## Portfolio Optimization
+## [Portfolio Optimization](config.yaml#L68)
 
 ### Mean-Variance Optimization
 
@@ -234,7 +239,7 @@ To ensure a balanced exposure across different market segments, the script imple
 
 ---
 
-## Monte Carlo Projection
+## [Monte Carlo Projection](config.yaml#L79)
 
 Phase 6 of the pipeline involves a sophisticated Monte Carlo simulation to project the long-term performance of the optimized portfolio. This provides a probabilistic forecast of future outcomes, helping to understand the potential range of returns and risks. The projection is highly configurable and supports several advanced simulation models.
 
