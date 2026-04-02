@@ -213,7 +213,7 @@ This methodology ensures that the final stock universe is not only composed of h
 
 The script's primary portfolio optimization strategy is Mean-Variance Optimization, a cornerstone of Modern Portfolio Theory. The goal is to find the portfolio asset allocation that maximizes the investor's utility by balancing expected return against risk (variance).
 
-The optimization is performed by the `pypfopt` library, which solves for the weights (`w`) that maximize the following quadratic utility function:
+The optimization is performed by the `pypfopt` library, which solves for the weights ($w$) that maximize the following quadratic utility function:
 
 $$
 \max_{w} \quad w^T \mu - \frac{\delta}{2} w^T \Sigma w
