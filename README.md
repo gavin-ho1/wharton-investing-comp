@@ -1,4 +1,4 @@
-# Wharton Investing Competition Codebase
+# Wharton Investment Competition Codebase
 
 ## This repository contains all stock filtering, portfolio allocation strategies, backesting, and projections used by The Hotchkiss School's Team, Bullish Bearcats, in the 2025-2026 [Wharton Global High School Investment Competition](https://globalyouth.wharton.upenn.edu/competitions/investment-competition/) along with detailed descriptions of each part of the code. This repository will go public after the final report submission date. As of January 27, 2026, our team was selected as [Semifinalists](https://globalyouth.wharton.upenn.edu/news/a-winning-season-thousands-of-teams-bigger-stakes-and-the-top-50-2026-investment-competition-teams-revealed/#:~:text=Bullish%20Bearcats%3A%C2%A0The%20Hotchkiss%20School%2C%20Connecticut%2C%20U.S.), placing us among the top 50 teams worldwide and advancing us to the Semifinal Round.
 
