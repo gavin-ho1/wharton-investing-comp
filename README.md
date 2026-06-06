@@ -4,6 +4,32 @@
 
 It contains a multi-phase quantitative investing workflow designed to identify promising stocks, construct an optimized portfolio, and project its future performance. The entire process is configurable via the `config.yaml` file. It also contains the code we used to generate various graphs and tables used in our final report.
 
+
+## Citation and Use in Research or Competitions
+
+This project is released under the MIT License.
+
+While the license permits unrestricted use, modification, and redistribution,
+appropriate attribution is strongly requested when this work is used in:
+
+- academic research papers or coursework
+- competitions (including investment or finance competitions)
+- derivative models or trading/portfolio systems
+- public reports, publications, or presentations
+
+If you use this codebase, please cite it as:
+
+```
+@misc{wharton_investment_competition_2026,
+  author = {Ho, Gavin},
+  title = {Wharton Investment Competition Codebase},
+  year = {2026},
+  url = {https://github.com/gavin-ho1/wharton-investment-comp/}
+}
+```
+
+Attribution helps ensure transparency and traceability of quantitative methods used in competition and research contexts.
+
 ## Investment Pipeline
 
 The investment pipeline consists of the following phases:
